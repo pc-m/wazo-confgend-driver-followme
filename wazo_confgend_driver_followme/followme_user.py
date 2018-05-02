@@ -30,7 +30,10 @@ class FollowMeUserGenerator(object):
     def generate(self):
         for row in self.dao.find_sip_user_settings():
             for line in self.format_row(row):
-                yield line
+                try:
+                    yield line
+                except AttributeError:
+                    continue
 
     def format_row(self, row):
         section = row.user_id
